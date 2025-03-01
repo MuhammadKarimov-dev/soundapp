@@ -1,13 +1,25 @@
 import { Navigate } from "react-router-dom";
 
 interface PrivateRouteProps {
-  element: JSX.Element;
+  element: React.ReactElement;
+  allowedRole: string;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
-  const isAuthenticated = localStorage.getItem("user"); // Login qilinganini tekshiramiz
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ element, allowedRole }) => {
+  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const isAuthenticated = !!user.token;
+  const hasCorrectRole = user.role === allowedRole;
 
-  return isAuthenticated ? element : <Navigate to="/" replace />;
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (!hasCorrectRole) {
+    // Agar foydalanuvchi roli to'g'ri kelmasa, asosiy sahifaga qaytarish
+    return <Navigate to="/" replace />;
+  }
+
+  return element;
 };
 
 export default PrivateRoute;
