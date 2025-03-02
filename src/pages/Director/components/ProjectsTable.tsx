@@ -349,95 +349,59 @@ export function ProjectsTable() {
   )
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <h2 className="text-2xl font-bold">Loyihalar</h2>
-          <span className="px-3 py-1 text-sm bg-blue-100 text-blue-800 rounded-full">
-            {projects.length} ta
-          </span>
-        </div>
-        <button
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Loyihalar</h2>
+        <button 
           onClick={() => setIsAddModalOpen(true)}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center gap-2"
         >
-          <Plus className="h-4 w-4 mr-2" />
-          Yangi loyiha
+          <Plus className="h-5 w-5" />
+          <span>Yangi loyiha</span>
         </button>
       </div>
 
-      <div className="flex items-center space-x-4 bg-white p-4 rounded-lg border">
-        <Search className="h-5 w-5 text-gray-400" />
-        <input
-          type="text"
-          placeholder="Loyihalarni qidirish..."
-          className="flex-1 outline-none"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {filteredProjects.map((project) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((project) => (
           <div 
-            key={project.id} 
-            className="bg-white rounded-lg border overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
+            key={project.id}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
             onClick={() => handleProjectClick(project)}
           >
-            <div className="aspect-video bg-gray-100 relative">
-              {project.thumbnail ? (
-                <img 
-                  src={project.thumbnail} 
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <Film className="h-12 w-12 text-gray-400" />
-                </div>
-              )}
-              <ProjectStatusBadge status={project.status} />
-            </div>
-
+            <img 
+              src={project.thumbnail} 
+              alt={project.title}
+              className="w-full h-48 object-cover"
+            />
             <div className="p-4">
-              <h3 className="font-medium text-lg mb-2">{project.title}</h3>
-              
-              <div className="space-y-2 text-sm text-gray-500">
-                <div className="flex items-center">
-                  <Calendar className="h-4 w-4 mr-2" />
-                  <span>Muddat: {project.startDate} - {project.endDate}</span>
+              <h3 className="font-semibold text-lg text-gray-900 dark:text-white mb-2">
+                {project.title}
+              </h3>
+              <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-4">
+                <div className="flex items-center gap-1">
+                  <Calendar className="h-4 w-4" />
+                  <span>{project.startDate}</span>
                 </div>
-                <div className="flex items-center">
-                  <Users className="h-4 w-4 mr-2" />
-                  <span>Ovoz aktyorlari: {project.voiceActors.length} ta</span>
+                <div className="flex items-center gap-1">
+                  <Users className="h-4 w-4" />
+                  <span>{project.voiceActors.length} aktyorlar</span>
                 </div>
               </div>
-
-              <div className="mt-4 pt-4 border-t">
-                <div className="flex justify-between items-center">
-                  <div className="text-sm text-gray-500">
-                    Qismlar: {project.episodes.length} ta
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button 
-                      className="p-1 hover:bg-gray-100 rounded"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleEditProject(project)
-                      }}
-                    >
-                      <Pencil className="h-4 w-4 text-gray-500" />
-                    </button>
-                    <button 
-                      className="p-1 hover:bg-gray-100 rounded"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleDeleteProject(project.id)
-                      }}
-                    >
-                      <Trash2 className="h-4 w-4 text-red-500" />
-                    </button>
-                  </div>
+              <div className="flex items-center justify-between">
+                <ProjectStatusBadge status={project.status} />
+                <div className="flex gap-2">
+                  <button 
+                    className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                    onClick={(e) => handleEditProject(project)}
+                  >
+                    <Pencil className="h-4 w-4 text-gray-500 dark:text-gray-400" />
+                  </button>
+                  <button 
+                    className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                    onClick={(e) => handleDeleteProject(project.id)}
+                  >
+                    <Trash2 className="h-4 w-4 text-red-500" />
+                  </button>
                 </div>
               </div>
             </div>

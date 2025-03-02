@@ -1,5 +1,5 @@
 import * as React from "react"
-import { X, Upload } from "lucide-react"
+import { X, Upload, Plus } from "lucide-react"
 import { Modal } from "./ui/Modal"
 import { SearchableSelect } from "./ui/SearchableSelect"
 import { EpisodeUpload, Episode } from "./ui/EpisodeUpload"
@@ -168,47 +168,43 @@ export function AddProjectModal({
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Loyiha nomi
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Loyiha nomi *
             </label>
             <input
               type="text"
               required
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="w-full p-2 border rounded-md"
+              className="w-full rounded-lg bg-slate-200 dark:bg-slate-700 px-3 py-2 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="Film nomi"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Holati
             </label>
             <select
-              required
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-              className="w-full p-2 border rounded-md"
+              className="w-full rounded-lg bg-slate-200 dark:bg-slate-700 px-3 py-2 text-gray-900 dark:text-white"
             >
               {projectStatuses.map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
+                <option key={status} value={status}>{status}</option>
               ))}
             </select>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Loyiha haqida
           </label>
           <textarea
-            required
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-            className="w-full p-2 border rounded-md"
+            className="w-full rounded-lg bg-slate-200 dark:bg-slate-700 px-3 py-2 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             rows={3}
             placeholder="Loyiha tavsifi..."
           />
@@ -216,48 +212,51 @@ export function AddProjectModal({
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Muddat
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Muddat *
             </label>
             <input
               type="date"
               required
               value={formData.deadline}
               onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
-              className="w-full p-2 border rounded-md"
+              className="w-full rounded-lg bg-slate-200 dark:bg-slate-700 px-3 py-2 text-gray-900 dark:text-white"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Byudjet (so'm)
             </label>
             <input
               type="number"
-              required
               value={formData.budget}
               onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-              className="w-full p-2 border rounded-md"
+              className="w-full rounded-lg bg-slate-200 dark:bg-slate-700 px-3 py-2 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
               placeholder="10000000"
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Rejissor *
           </label>
-          <SearchableSelect
-            options={directors}
-            selectedValues={formData.director ? [formData.director] : []}
-            onChange={values => setFormData({ ...formData, director: values[0] })}
-            placeholder="Rejissorni tanlang"
-            multiple={false}
-          />
+          <select
+            required
+            value={formData.director}
+            onChange={(e) => setFormData({ ...formData, director: e.target.value })}
+            className="w-full rounded-lg bg-slate-200 dark:bg-slate-700 px-3 py-2 text-gray-900 dark:text-white"
+          >
+            <option value="">Rejissorni tanlang</option>
+            {directors.map((director) => (
+              <option key={director.id} value={director.id}>{director.fullName}</option>
+            ))}
+          </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Ovoz rejissorlari *
           </label>
           <SearchableSelect
@@ -269,7 +268,7 @@ export function AddProjectModal({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Ovoz aktyorlari *
           </label>
           <SearchableSelect
@@ -281,14 +280,14 @@ export function AddProjectModal({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Tahrirchi
           </label>
           <select
             required
             value={formData.editor}
             onChange={(e) => setFormData({ ...formData, editor: e.target.value })}
-            className="w-full p-2 border rounded-md"
+            className="w-full p-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 rounded-md text-gray-900 dark:text-white"
           >
             <option value="">Tanlang</option>
             {editors.map((editor) => (
@@ -300,7 +299,7 @@ export function AddProjectModal({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Film qismlari
           </label>
           <EpisodeUpload
@@ -310,39 +309,44 @@ export function AddProjectModal({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Loyiha rasmi
           </label>
-          <input
-            type="file"
-            ref={fileInputRef.thumbnail}
-            accept="image/*"
-            onChange={(e) => handleFileChange('thumbnail', e.target.files?.[0] || null)}
-            className="hidden"
-          />
-          <button
-            type="button"
-            onClick={() => fileInputRef.thumbnail.current?.click()}
-            className="w-full p-2 border-2 border-dashed rounded-md hover:bg-gray-50 flex flex-col items-center"
-          >
-            <Upload className="h-6 w-6 text-gray-400" />
-            <span className="text-sm text-gray-500">
-              {formData.thumbnail ? formData.thumbnail.name : "Rasm yuklash"}
-            </span>
-          </button>
+          <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-slate-300 dark:border-slate-600 border-dashed rounded-lg bg-slate-200 dark:bg-slate-700">
+            <div className="space-y-1 text-center">
+              <Plus className="mx-auto h-12 w-12 text-gray-400" />
+              <div className="flex text-sm text-gray-600 dark:text-gray-400">
+                <label className="relative cursor-pointer rounded-md font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">
+                  <span>Rasm yuklash</span>
+                  <input 
+                    type="file" 
+                    className="sr-only"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0]
+                      if (file) setFormData({ ...formData, thumbnail: file })
+                    }}
+                  />
+                </label>
+              </div>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                PNG, JPG, GIF (max. 2MB)
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="flex justify-end space-x-3 pt-4">
+        <div className="flex justify-end gap-3 mt-6">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-sm border rounded-md hover:bg-gray-50"
+            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg"
           >
             Bekor qilish
           </button>
           <button
             type="submit"
-            className="px-4 py-2 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 rounded-lg"
           >
             {initialData ? "Saqlash" : "Qo'shish"}
           </button>

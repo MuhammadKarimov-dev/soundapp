@@ -1,21 +1,25 @@
-import * as React from "react"
+import React from "react"
 import { Outlet } from "react-router-dom"
-import { ThemeProvider } from "../../components/ThemeProvider"
 import { MainNav } from "./components/MainNav"
 import { UserNav } from "./components/UserNav"
 import { BottomNav } from "./components/BottomNav"
+import { ThemeProvider } from "../../components/ThemeProvider"
+import { ThemeToggle } from "./components/ThemeToggle"
 
 export default function DirectorLayout() {
   return (
     <ThemeProvider>
-      <div className="flex min-h-screen flex-col">
-        <header className="sticky top-0 z-40 bg-white shadow-lg">
+      <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
+        <header className="sticky top-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
           <div className="container mx-auto px-4 flex h-16 items-center justify-between">
             <div className="flex items-center gap-6">
-              <h1 className="text-xl font-bold">Seezntv</h1>
+              <h1 className="text-xl font-bold text-gray-900 dark:text-white">Seezntv</h1>
               <MainNav />
             </div>
-            <UserNav />
+            <div className="flex items-center gap-4">
+              <ThemeToggle />
+              <UserNav />
+            </div>
           </div>
         </header>
 

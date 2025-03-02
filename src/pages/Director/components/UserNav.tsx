@@ -1,45 +1,20 @@
-import * as React from "react"
-import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
-import * as AvatarPrimitive from "@radix-ui/react-avatar"
-import { LogOut } from "lucide-react"
+import { User } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 export function UserNav() {
-  const handleLogout = () => {
-    localStorage.removeItem('user')
-    window.location.href = '/'
-  }
+  const navigate = useNavigate()
 
   return (
-    <DropdownMenuPrimitive.Root>
-      <DropdownMenuPrimitive.Trigger className="flex items-center gap-2 hover:bg-gray-100 rounded-full p-2">
-        <AvatarPrimitive.Root className="h-8 w-8 rounded-full bg-gray-200">
-          <AvatarPrimitive.Image
-            src="/placeholder-avatar.jpg"
-            alt="Director"
-            className="h-full w-full rounded-full object-cover"
-          />
-          <AvatarPrimitive.Fallback className="flex h-full w-full items-center justify-center rounded-full bg-gray-100">
-            D
-          </AvatarPrimitive.Fallback>
-        </AvatarPrimitive.Root>
-      </DropdownMenuPrimitive.Trigger>
-
-      <DropdownMenuPrimitive.Portal>
-        <DropdownMenuPrimitive.Content className="w-56 rounded-md border bg-white p-2 shadow-md">
-          <div className="px-2 py-1.5">
-            <p className="text-sm font-medium">Director</p>
-            <p className="text-xs text-gray-500">director@seezntv.com</p>
-          </div>
-          <DropdownMenuPrimitive.Separator className="my-1 h-px bg-gray-200" />
-          <DropdownMenuPrimitive.Item 
-            className="flex cursor-pointer items-center px-2 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded-md"
-            onClick={handleLogout}
-          >
-            <LogOut className="mr-2 h-4 w-4" />
-            Chiqish
-          </DropdownMenuPrimitive.Item>
-        </DropdownMenuPrimitive.Content>
-      </DropdownMenuPrimitive.Portal>
-    </DropdownMenuPrimitive.Root>
+    <div 
+      className="flex items-center gap-2 cursor-pointer"
+      onClick={() => navigate("/director/profile")}
+    >
+      <div className="flex items-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+        <User className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+        <span className="text-sm text-gray-700 dark:text-gray-300 hidden md:block">
+          John Director
+        </span>
+      </div>
+    </div>
   )
 } 

@@ -8,56 +8,32 @@ import {
 } from "lucide-react"
 
 export function MainNav() {
+  const menuItems = [
+    { icon: LayoutDashboard, label: "Dashboard", path: "/director" },
+    { icon: Film, label: "Loyihalar", path: "/director/projects" },
+    { icon: Users, label: "Hodimlar", path: "/director/employees" },
+    { icon: DollarSign, label: "Moliya", path: "/director/finances" }
+  ]
+
   return (
-    <nav className="hidden md:flex items-center space-x-6">
-      <NavLink 
-        to="/director" 
-        end
-        className={({ isActive }) => 
-          `flex items-center text-sm font-medium transition-colors hover:text-primary ${
-            isActive ? "text-blue-600" : "text-gray-500"
-          }`
-        }
-      >
-        <LayoutDashboard className="mr-2 h-4 w-4" />
-        Dashboard
-      </NavLink>
-      
-      <NavLink 
-        to="/director/projects"
-        className={({ isActive }) => 
-          `flex items-center text-sm font-medium transition-colors hover:text-primary ${
-            isActive ? "text-blue-600" : "text-gray-500"
-          }`
-        }
-      >
-        <Film className="mr-2 h-4 w-4" />
-        Loyihalar
-      </NavLink>
-      
-      <NavLink 
-        to="/director/employees"
-        className={({ isActive }) => 
-          `flex items-center text-sm font-medium transition-colors hover:text-primary ${
-            isActive ? "text-blue-600" : "text-gray-500"
-          }`
-        }
-      >
-        <Users className="mr-2 h-4 w-4" />
-        Xodimlar
-      </NavLink>
-      
-      <NavLink 
-        to="/director/finances"
-        className={({ isActive }) => 
-          `flex items-center text-sm font-medium transition-colors hover:text-primary ${
-            isActive ? "text-blue-600" : "text-gray-500"
-          }`
-        }
-      >
-        <DollarSign className="mr-2 h-4 w-4" />
-        Moliya
-      </NavLink>
+    <nav className="hidden md:flex gap-6">
+      {menuItems.map((item) => (
+        <NavLink
+          key={item.path}
+          to={item.path}
+          end
+          className={({ isActive }) => `
+            flex items-center gap-2 text-sm font-medium transition-colors
+            ${isActive 
+              ? 'text-blue-600 dark:text-blue-400' 
+              : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+            }
+          `}
+        >
+          <item.icon className={`h-4 w-4`} />
+          <span>{item.label}</span>
+        </NavLink>
+      ))}
     </nav>
   )
 } 

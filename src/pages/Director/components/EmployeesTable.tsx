@@ -115,16 +115,12 @@ export function EmployeesTable() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold">Xodimlar</h2>
-          <p className="text-gray-500">Barcha xodimlar ro'yxati</p>
-        </div>
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Hodimlar</h2>
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-lg"
         >
-          <UserPlus className="h-4 w-4 mr-2" />
-          Yangi xodim qo'shish
+          Yangi hodim qo'shish
         </button>
       </div>
 
@@ -175,77 +171,47 @@ export function EmployeesTable() {
       </div>
 
       {/* Table */}
-      <div className="bg-white rounded-lg border overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead className="bg-gray-50">
+          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
-                <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">F.I.O</th>
-                <th className="hidden sm:table-cell px-4 py-3 text-left text-sm font-medium text-gray-500">Login</th>
-                <th className="hidden md:table-cell px-4 py-3 text-left text-sm font-medium text-gray-500">Lavozimi</th>
-                <th className="hidden lg:table-cell px-4 py-3 text-left text-sm font-medium text-gray-500">Telefon</th>
-                <th className="hidden xl:table-cell px-4 py-3 text-left text-sm font-medium text-gray-500">Oyligi</th>
-                <th className="hidden md:table-cell px-4 py-3 text-left text-sm font-medium text-gray-500">Holati</th>
-                <th className="px-4 py-3 w-[100px]"></th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  F.I.O
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  Lavozim
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  Amallar
+                </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
-              {filteredEmployees.map((employee) => (
-                <tr key={employee.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3">
-                    <div className="flex items-center">
-                      <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-                        <span className="font-medium text-blue-800">
-                          {employee.fullName.charAt(0)}
-                        </span>
-                      </div>
-                      <div className="ml-3">
-                        <p className="font-medium">{employee.fullName}</p>
-                        <div className="md:hidden">
-                          <p className="text-sm text-gray-500">{employee.position}</p>
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            employee.status === "Faol" 
-                              ? "bg-green-100 text-green-800"
-                              : "bg-gray-100 text-gray-800"
-                          }`}>
-                            {employee.status}
-                          </span>
-                        </div>
-                      </div>
+            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+              {employees.map((employee) => (
+                <tr key={employee.id}>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm font-medium text-gray-900 dark:text-white">
+                      {employee.fullName}
                     </div>
                   </td>
-                  <td className="hidden sm:table-cell px-4 py-3 text-sm">{employee.username}</td>
-                  <td className="hidden md:table-cell px-4 py-3">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
                       {employee.position}
-                    </span>
-                  </td>
-                  <td className="hidden lg:table-cell px-4 py-3 text-sm">{employee.phoneNumber}</td>
-                  <td className="hidden xl:table-cell px-4 py-3 text-sm">{employee.salary.toLocaleString()} so'm</td>
-                  <td className="hidden md:table-cell px-4 py-3">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                      employee.status === "Faol" 
-                        ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
-                    }`}>
-                      {employee.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-2">
-                      <button 
-                        onClick={() => handleEditEmployee(employee)}
-                        className="p-1 hover:bg-gray-100 rounded"
-                      >
-                        <Pencil className="h-4 w-4 text-gray-500" />
-                      </button>
-                      <button 
-                        onClick={() => handleDeleteEmployee(employee.id)}
-                        className="p-1 hover:bg-gray-100 rounded"
-                      >
-                        <Trash2 className="h-4 w-4 text-red-500" />
-                      </button>
                     </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200">
+                      Faol
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                    <button className="text-blue-600 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300">
+                      Tahrirlash
+                    </button>
                   </td>
                 </tr>
               ))}

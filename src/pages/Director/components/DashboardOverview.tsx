@@ -37,31 +37,41 @@ const stats = [
 export function DashboardOverview() {
   return (
     <div className="space-y-6">
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => (
-          <div key={stat.title} className="p-6 bg-white rounded-lg border">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                <p className="text-2xl font-semibold mt-1">{stat.value}</p>
-              </div>
-              <div className="p-3 bg-gray-50 rounded-lg">
-                {stat.icon}
-              </div>
-            </div>
-            <p className="text-sm text-gray-500 mt-2">{stat.change}</p>
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Faol loyihalar</h3>
+            <Film className="h-6 w-6 text-blue-500" />
           </div>
-        ))}
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">12</p>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white">Hodimlar</h3>
+            <Users className="h-6 w-6 text-green-500" />
+          </div>
+          <p className="text-3xl font-bold text-gray-900 dark:text-white">24</p>
+        </div>
+
+        {/* Boshqa statistika kartochkalari */}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <div className="p-6 bg-white rounded-lg border">
-          <h3 className="text-lg font-medium mb-4">Loyihalar statistikasi</h3>
-          <ProjectsChart />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+            So'nggi loyihalar
+          </h3>
+          {/* Loyihalar ro'yxati */}
         </div>
-        <div className="p-6 bg-white rounded-lg border">
-          <h3 className="text-lg font-medium mb-4">Xodimlar faolligi</h3>
-          <EmployeeActivityChart />
+
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+            Faol hodimlar
+          </h3>
+          {/* Hodimlar ro'yxati */}
         </div>
       </div>
     </div>

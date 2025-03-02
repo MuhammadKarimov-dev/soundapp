@@ -1,58 +1,34 @@
 import * as React from "react"
-import { Link, useLocation } from "react-router-dom"
-import { 
-  LayoutDashboard, 
-  Film, 
-  Users, 
-  DollarSign 
-} from "lucide-react"
+import { NavLink } from "react-router-dom"
+import { LayoutDashboard, Film, Users, DollarSign } from "lucide-react"
 
 export function BottomNav() {
-  const location = useLocation()
-
-  const routes = [
-    {
-      href: "/director",
-      label: "Dashboard",
-      icon: <LayoutDashboard className="h-6 w-6" />,
-      active: location.pathname === "/director",
-    },
-    {
-      href: "/director/projects",
-      label: "Loyihalar",
-      icon: <Film className="h-6 w-6" />,
-      active: location.pathname === "/director/projects",
-    },
-    {
-      href: "/director/employees",
-      label: "Xodimlar",
-      icon: <Users className="h-6 w-6" />,
-      active: location.pathname === "/director/employees",
-    },
-    {
-      href: "/director/finances",
-      label: "Moliya",
-      icon: <DollarSign className="h-6 w-6" />,
-      active: location.pathname === "/director/finances",
-    },
+  const menuItems = [
+    { icon: LayoutDashboard, label: "Dashboard", path: "/director" },
+    { icon: Film, label: "Loyihalar", path: "/director/projects" },
+    { icon: Users, label: "Hodimlar", path: "/director/employees" },
+    { icon: DollarSign, label: "Moliya", path: "/director/finances" }
   ]
 
   return (
-    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t">
-      <div className="flex justify-around items-center h-16">
-        {routes.map((route) => (
-          <Link
-            key={route.href}
-            to={route.href}
-            className={`flex flex-col items-center justify-center flex-1 h-full ${
-              route.active 
-                ? "text-blue-600" 
-                : "text-gray-500 hover:text-gray-900"
-            }`}
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+      <div className="grid grid-cols-4 gap-1">
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            end
+            className={({ isActive }) => `
+              flex flex-col items-center gap-1 py-3
+              ${isActive 
+                ? 'text-blue-600 dark:text-blue-400' 
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+              }
+            `}
           >
-            {route.icon}
-            <span className="text-xs mt-1">{route.label}</span>
-          </Link>
+            <item.icon className="h-5 w-5" />
+            <span className="text-xs">{item.label}</span>
+          </NavLink>
         ))}
       </div>
     </nav>

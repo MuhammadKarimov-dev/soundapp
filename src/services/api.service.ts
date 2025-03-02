@@ -1,24 +1,21 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://your-api-url.com/api'; // API URL manzilini o'zgartiring
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 // Token bilan ishlash uchun interceptor
 const api = axios.create({
   baseURL: BASE_URL,
 });
 
-// Request interceptor - har bir so'rovga token qo'shish
 api.interceptors.request.use(
   (config) => {
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    if (user.token) {
-      config.headers.Authorization = `Bearer ${user.token}`;
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // User interfeysi
@@ -29,7 +26,7 @@ export interface TestUser extends User {
 export interface User {
   id: number;
   username: string;
-  role: "director" | "rejissor" | "ovoz-aktyori" | "sound-rejissor" | "tahrirchi";
+  role: "director" | "rejissor";
   fullName: string;
 }
 
@@ -38,54 +35,28 @@ class AuthService {
   private readonly USER_KEY = "user";
 
   login(username: string, password: string): boolean {
-    // Test uchun foydalanuvchilar
-    const testUsers: TestUser[] = [
-      {
+    // Oddiy tekshiruv
+    if (username === "director" && password === "123") {
+      const user = {
         id: 1,
         username: "director",
-        password: "123",
         role: "director",
         fullName: "John Director"
-      },
-      {
+      };
+      localStorage.setItem(this.TOKEN_KEY, "test_token");
+      localStorage.setItem(this.USER_KEY, JSON.stringify(user));
+      return true;
+    }
+    
+    if (username === "rejissor" && password === "123") {
+      const user = {
         id: 2,
         username: "rejissor",
-        password: "123",
         role: "rejissor",
         fullName: "Bob Rejissor"
-      },
-      {
-        id: 3,
-        username: "ovoz-aktyori",
-        password: "123",
-        role: "ovoz-aktyori",
-        fullName: "Alice Voice"
-      },
-      {
-        id: 4,
-        username: "sound-rejissor",
-        password: "123",
-        role: "sound-rejissor",
-        fullName: "Mike Sound"
-      },
-      {
-        id: 5,
-        username: "tahrirchi",
-        password: "123",
-        role: "tahrirchi",
-        fullName: "Tom Editor"
-      }
-    ];
-
-    const user = testUsers.find(u => 
-      u.username === username && u.password === password
-    );
-
-    if (user) {
-      // Parolni o'chirib tashlaymiz
-      const { password: _, ...userWithoutPassword } = user;
+      };
       localStorage.setItem(this.TOKEN_KEY, "test_token");
-      localStorage.setItem(this.USER_KEY, JSON.stringify(userWithoutPassword));
+      localStorage.setItem(this.USER_KEY, JSON.stringify(user));
       return true;
     }
 
@@ -284,4 +255,24 @@ export const handleApiError = (error: ApiError) => {
   }
   console.error('Network xatosi:', error.message);
   return 'Tarmoq xatosi yuz berdi';
+};
+
+// API service
+export const apiService = {
+  // Projects
+  getProjects: () => api.get('/projects'),
+  getProject: (id: number) => api.get(`/projects/${id}`),
+  createProject: (data: any) => api.post('/projects', data),
+  updateProject: (id: number, data: any) => api.put(`/projects/${id}`, data),
+  deleteProject: (id: number) => api.delete(`/projects/${id}`),
+
+  // Episodes
+  getEpisodes: (projectId: number) => api.get(`/projects/${projectId}/episodes`),
+  updateEpisode: (projectId: number, episodeId: number, data: any) => 
+    api.put(`/projects/${projectId}/episodes/${episodeId}`, data),
+
+  // Voice Actors
+  getVoiceActors: () => api.get('/voice-actors'),
+  assignVoiceActor: (projectId: number, actorId: number, data: any) =>
+    api.post(`/projects/${projectId}/voice-actors/${actorId}`, data)
 }; 
