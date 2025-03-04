@@ -2,6 +2,7 @@ import { RouteObject } from "react-router-dom"
 import Login from "../pages/auth/Login"
 import { DirectorRoutes } from "../pages/Director/routes"
 import { Navigate } from "react-router-dom"
+import NotFound from "../pages/auth/NotFound"
 
 // Vaqtinchalik test komponenti
 const TestPage = ({ role }: { role: string }) => (
@@ -30,6 +31,6 @@ export const routes: RouteObject[] = [
   },
   {
     path: "*",
-    element: <Navigate to="/login" replace />
+    element: <NotFound />
   }
-] 
+]
