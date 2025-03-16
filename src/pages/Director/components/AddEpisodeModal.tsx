@@ -1,6 +1,7 @@
 import React from "react"
 import { Modal } from "../../../components/ui/Modal"
 import { Upload } from "lucide-react"
+import { EpisodeFormData } from "../../../types/EpisodeFormData"
 
 interface AddEpisodeModalProps {
   isOpen: boolean
@@ -8,12 +9,7 @@ interface AddEpisodeModalProps {
   onSubmit: (data: EpisodeFormData) => void
 }
 
-interface EpisodeFormData {
-  title: string
-  duration: string
-  video?: File
-  subtitle?: File
-}
+
 
 export function AddEpisodeModal({ isOpen, onClose, onSubmit }: AddEpisodeModalProps) {
   const [formData, setFormData] = React.useState<EpisodeFormData>({
