@@ -25,11 +25,13 @@
     "devtools-detect": "^4.0.2",
     "disable-devtool": "^0.1.1",
     "lucide-react": "^0.476.0",
+    "motion": "^12.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.1",
     "recharts": "^2.15.1",
-    "tailwind-merge": "^3.0.2"
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

@@ -9,6 +9,7 @@ import { Modal } from "../../../components/ui/Modal"
 import { ChatModal } from "./ChatModal"
 import { AddEpisodeModal } from "./AddEpisodeModal"
 import { Episodes } from "./Episodes"
+import { Episode } from "./ui/EpisodeUpload"
 
 interface TeamMember {
   id: number
